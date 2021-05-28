@@ -1,0 +1,21 @@
+{% extends 'mail/layout.html' %}
+{% block container %}
+<form method="POST" class="form-group container">
+    {% csrf_token %}
+    <h1 class="border-bottom">Register</h1>
+    <br />
+    <input name="email" type="email" placeholder="Email" class="form-control"/>
+    <br />
+    <input name="password" type="password" placeholder="Password" class="form-control"/>
+    <br />
+    <input name="password2" type="password" placeholder="Confirm Password" class="form-control"/>
+    <br />
+    <button type="submit" class="btn btn-outline-primary border-bottom">
+        Register
+    </button>
+    <br />
+    <p class="text-secondary border-top mt-4">
+        Already have an account ? Sign up <a href="{% url 'login' %}">Here</a>
+    </p>
+</form>
+{% endblock container %}

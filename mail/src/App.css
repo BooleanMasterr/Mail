@@ -1,0 +1,60 @@
+.navbar__container {
+    background-color: #000000;
+    height: 75px;
+    margin: 0;
+    padding: 0;
+}
+
+.email__container {
+    border: 1px solid #dddddd;
+    background-color: #ffffff;
+    border-radius: 4px;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+}
+
+
+.navbar__item {
+    float: left;
+    list-style: none;
+    padding-top: 25px;
+    padding-left: 10px;
+}
+
+.navbar__item__right {
+    list-style: none;
+    position: absolute;
+    right: 10px;
+    padding-top: 25px;
+    padding-right: 15px;
+}
+
+.navbar__item__right a,
+.navbar__item a {
+    color: #ffffff;
+    text-decoration: none;
+    font-size: large;
+    transition: all 0.5s;
+}
+
+.navbar__item__right a:hover,
+.navbar__item a:hover {
+    color: #61dbf6;
+}
+
+.read__true {
+    background-color: #dddddd;
+}
+
+.ml-1 {
+    margin-left: 1rem;
+}
+
+.ml-2 {
+    margin-left: 2rem;
+}
+
+textarea {
+    height: 200px;
+
+}
