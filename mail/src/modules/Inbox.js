@@ -16,7 +16,6 @@ export default class Inbox extends React.Component {
                 <hr />
                 {this.props.emails.map(email => (
                     <Email 
-                        sent={this.props.sent}
                         subject={email.subject}
                         sender={email.sender}
                         recipients={email.recipients}
@@ -24,7 +23,7 @@ export default class Inbox extends React.Component {
                         timestamp={email.timestamp}
                         loadModule={this.loadModule}
                         read={email.read}
-                        key={this.props.mailbox}
+                        key={email.id}
                         id={email.id}
                     />
                 ))}

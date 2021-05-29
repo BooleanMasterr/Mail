@@ -13,15 +13,14 @@ export default class App extends React.Component {
         super();
         this.state = {
             emails: [],
-            sent: false,
             __module: 'inbox',
-            id: 0
+            id: 0,
+            properties: {}
         }
     }
 
     componentDidMount() {
         this.loadMailbox('inbox');
-        console.log('mounted');
     }
 
 
@@ -32,7 +31,6 @@ export default class App extends React.Component {
             mailbox === 'sent' ?
                 this.setState({
                     emails: data,
-                    sent: true,
                     __module: mailbox
                 })
             :this.setState({
@@ -43,17 +41,18 @@ export default class App extends React.Component {
 
     }
 
-    loadModule = (module_, id=0) => {
+    loadModule = (module_, id=0, props={}) => {
         this.setState({
             __module: module_,
-            id: id 
+            id: id,
+            properties: props 
         })
     }
 
 
     renderModule = () => {
-        if (this.state.__module === 'compose') {
-            return <Compose />
+         if (this.state.__module === 'compose') {
+            return <Compose properties={this.state.properties}/>
         } else if (this.state.__module === 'details') {
             return (
                 <Details id={this.state.id} loadModule={this.loadModule}/>
@@ -61,7 +60,6 @@ export default class App extends React.Component {
         } else {
             return (
                 <Inbox 
-                    sent={this.state.sent}
                     emails={this.state.emails}
                     mailbox={this.state.__module}
                     loadModule={this.loadModule}
@@ -98,7 +96,7 @@ export default class App extends React.Component {
                             </Link>
                         </li>
                         <li className="navbar__item__right">
-                            <Link to="/logout" onClick={() => window.location.replace('/logout')}>
+                            <Link to="/logout" onClick={() => window.location.replace('/login')}>
                                 Logout
                             </Link>
                         </li>

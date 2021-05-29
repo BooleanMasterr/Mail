@@ -8,8 +8,22 @@ export default class Compose extends React.Component {
         this.state = {
             recipients: '',
             subject: '',
-            body: ''
+            body: '',
+            errors: '',
+            messages: ''
         }
+    }
+
+    componentDidMount() {
+        var propsExist = this.props.properties.defaultSubject === undefined ? false : true;
+        const { defaultSubject, defaultBody, defaultRecipients } = this.props.properties;
+        propsExist === true ?
+            this.setState({
+                recipients: defaultRecipients,
+                subject: defaultSubject,
+                body: defaultBody 
+            })
+        :null 
     }
 
     onChange = (event) => {
@@ -17,6 +31,13 @@ export default class Compose extends React.Component {
         this.setState({
             [name]: value 
         })
+    }
+
+    getUser = () => {
+        var userEmail = document.getElementById('user_email');
+        return (
+            userEmail.innerHTML.slice(1, -1)
+        )
     }
 
     onClick = (event) => {
@@ -27,15 +48,54 @@ export default class Compose extends React.Component {
                 subject: this.state.subject,
                 body: this.state.body 
             }
-        }).then(response => response)
-        .then(data => console.log(data))
+        }).then(response => response.data)
+        .then(data => {
+            if (data.error) {
+                this.setState({
+                    errors: data.error
+                });
+            } else {
+                this.setState({
+                    messages: data.message 
+                })
+            }
+        })
     }
 
     render() {
 
         return (
-            <form>
+            <form className="container">
+                {
+                    this.state.errors !== '' ?
+                    <div className="alert alert-danger" role="alert">
+                        {this.state.errors}
+                    </div>
+                    :null 
+                }
+                {
+                    this.state.messages !== ''?
+                    <div className="alert alert-success" role="alert">
+                        {this.state.messages}
+                    </div>
+                    :null
+                }
                 <h1>Compose</h1>
+                <hr />
+                <br />
+                <input 
+                    readOnly={true}
+                    defaultValue={`From: ${this.getUser()}`}
+                    className="form-control"
+                />
+                <br/>
+                <input 
+                    name="recipients"
+                    value={this.state.recipients}
+                    onChange={this.onChange}
+                    placeholder='Recipients'
+                    className='form-control'
+                />
                 <br />
                 <input 
                     name="subject"
@@ -50,14 +110,6 @@ export default class Compose extends React.Component {
                     value={this.state.body}
                     onChange={this.onChange}
                     placeholder='Body'
-                    className='form-control'
-                />
-                <br />
-                <input 
-                    name="recipients"
-                    value={this.state.recipients}
-                    onChange={this.onChange}
-                    placeholder='Recipients'
                     className='form-control'
                 />
                 <br />

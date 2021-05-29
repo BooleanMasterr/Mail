@@ -10,8 +10,8 @@ export default class Details extends React.Component {
         }
     }
 
-    loadModule = (module_, id=0) => {
-        this.props.loadModule(module_, id)
+    loadModule = (module_, id=0, props) => {
+        this.props.loadModule(module_, id, props)
     }
 
     componentDidMount() {
@@ -46,6 +46,13 @@ export default class Details extends React.Component {
         
     } 
 
+    getCurrentUser = () => {
+        var userEmail = document.getElementById('user_email');
+        return (
+            userEmail.innerHTML.slice(1, -1)
+        )
+    }
+
 
     render() {
 
@@ -58,7 +65,10 @@ export default class Details extends React.Component {
                 <p>{this.state.email.timestamp}</p>    
                 <button className="btn btn-outline-primary" onClick={this.archiveOnClick}>
                     {this.getDisplayText()}
-                </button>            
+                </button>    
+                <button className="btn btn-outline-primary ml-1" onClick={() => this.loadModule('compose', 0, {defaultSubject: `You: ${this.state.email.subject}`, defaultBody: `'${this.getCurrentUser()}' Replied to '${this.state.email.subject}' \n ______________`, defaultRecipients: this.state.email.sender})}>
+                    Reply 
+                </button>        
                 <hr />
             </div>
         );      
