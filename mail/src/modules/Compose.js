@@ -50,13 +50,15 @@ export default class Compose extends React.Component {
             }
         }).then(response => response.data)
         .then(data => {
-            if (data.error) {
+            if (data.message) {
                 this.setState({
-                    errors: data.error
-                });
+                    messages: data.message,
+                    errors: '' 
+                })
             } else {
                 this.setState({
-                    messages: data.message 
+                    errors: data.error,
+                    messages: ''
                 })
             }
         })
