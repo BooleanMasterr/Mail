@@ -38,11 +38,7 @@ export default class Details extends React.Component {
                 archived: !this.state.email.archived
             }
         })
-        if (this.getDisplayText() === 'Archive') {
-            this.loadModule('archive');
-        } else {
-            this.loadModule('inbox');
-        }
+        this.loadModule('inbox');
         
     } 
 
@@ -66,7 +62,7 @@ export default class Details extends React.Component {
                 <button className="btn btn-outline-primary" onClick={this.archiveOnClick}>
                     {this.getDisplayText()}
                 </button>    
-                <button className="btn btn-outline-primary ml-1" onClick={() => this.loadModule('compose', 0, {defaultSubject: `You: ${this.state.email.subject}`, defaultBody: `'${this.getCurrentUser()}' Replied to '${this.state.email.subject}' \n ______________`, defaultRecipients: this.state.email.sender})}>
+                <button className="btn btn-outline-primary ml-1" onClick={() => this.loadModule('compose', 0, {defaultSubject: this.state.email.subject.startsWith('Re:') === false ? `Re:${this.state.email.subject}`: this.state.email.subject, defaultBody: `On, ${this.state.email.timestamp}, ${this.state.email.sender} wrote: ${this.state.email.subject} \n ____________`, defaultRecipients: this.state.email.sender})}>
                     Reply 
                 </button>        
                 <hr />
